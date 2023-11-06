@@ -28,13 +28,14 @@ class _ChatView extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: Column(children: [
-          Expanded(child: ListView.builder(
-            itemCount: 100,
-            itemBuilder: (context, index) {
-            return const MyMessageBubble();
-          })),
-        
+        child: Column(
+          children: [
+            Expanded(child: ListView.builder(
+              itemCount: 100,
+              itemBuilder: (context, index) {
+                return const MyMessageBubble();
+              }
+            )),
           const Text('Text Area')
         ]),
       ),
