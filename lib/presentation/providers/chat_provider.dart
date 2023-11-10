@@ -32,6 +32,6 @@ class ChatProvider extends ChangeNotifier {
     chatScrollController.animateTo(
         chatScrollController.position.maxScrollExtent,
         duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut);
+        curve: Curves.bounceInOut);
   }
 }
