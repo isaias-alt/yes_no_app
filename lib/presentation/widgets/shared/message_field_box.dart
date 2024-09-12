@@ -14,24 +14,26 @@ class MessageFieldBox extends StatelessWidget {
     final chatProvider = context.read<ChatProvider>();
 
     final outlineInputBorder = UnderlineInputBorder(
-        borderSide: const BorderSide(color: Colors.transparent),
-        borderRadius: BorderRadius.circular(40));
+      borderSide: const BorderSide(color: Colors.transparent),
+      borderRadius: BorderRadius.circular(40),
+    );
 
     final inputDecoration = InputDecoration(
-        hintText: 'End your message with a "?"',
-        enabledBorder: outlineInputBorder,
-        focusedBorder: outlineInputBorder,
-        filled: true,
-        suffixIcon: IconButton(
-          icon: const Icon(Icons.send_outlined),
-          onPressed: () {
-            final textValue = textController.value.text;
-            if (textValue.isNotEmpty) {
-              chatProvider.sendMessage(textValue);
-              textController.clear();
-            }
-          },
-        ));
+      hintText: 'End your message with a "?"',
+      enabledBorder: outlineInputBorder,
+      focusedBorder: outlineInputBorder,
+      filled: true,
+      suffixIcon: IconButton(
+        icon: const Icon(Icons.send_outlined),
+        onPressed: () {
+          final textValue = textController.value.text;
+          if (textValue.isNotEmpty) {
+            chatProvider.sendMessage(textValue);
+            textController.clear();
+          }
+        },
+      ),
+    );
 
     return TextFormField(
       focusNode: focusNode,

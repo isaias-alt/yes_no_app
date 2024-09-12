@@ -19,7 +19,8 @@ class ChatScreen extends StatelessWidget {
           padding: EdgeInsets.all(8.0),
           child: CircleAvatar(
             backgroundImage: NetworkImage(
-                'https://img.20mn.fr/NiDWAVF4SaSODyTM6bNfeyk/1200x768_actrice-anya-taylor-joy'),
+              'https://img.20mn.fr/NiDWAVF4SaSODyTM6bNfeyk/1200x768_actrice-anya-taylor-joy',
+            ),
           ),
         ),
       ),
@@ -35,24 +36,28 @@ class _ChatView extends StatelessWidget {
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: Column(children: [
-          Expanded(
+        child: Column(
+          children: [
+            Expanded(
               child: ListView.builder(
-                  controller: chatProvider.chatScrollController,
-                  itemCount: chatProvider.messageList.length,
-                  itemBuilder: (context, index) {
-                    final message = chatProvider.messageList[index];
-                    return (message.fromWho == FromWho.hers)
-                        ? HerMessageBubble(
-                            message: message,
-                          )
-                        : MyMessageBubble(
-                            message: message,
-                          );
-                  })),
-          MessageFieldBox(onValue: chatProvider.sendMessage),
-          const SizedBox(height: 5)
-        ]),
+                controller: chatProvider.chatScrollController,
+                itemCount: chatProvider.messageList.length,
+                itemBuilder: (context, index) {
+                  final message = chatProvider.messageList[index];
+                  return (message.fromWho == FromWho.hers)
+                      ? HerMessageBubble(
+                          message: message,
+                        )
+                      : MyMessageBubble(
+                          message: message,
+                        );
+                },
+              ),
+            ),
+            MessageFieldBox(onValue: chatProvider.sendMessage),
+            const SizedBox(height: 5)
+          ],
+        ),
       ),
     );
   }
