@@ -9,13 +9,12 @@ class MyMessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(10),
             color: colors.primary,
           ),
           child: Padding(

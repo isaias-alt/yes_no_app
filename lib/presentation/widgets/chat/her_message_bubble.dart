@@ -9,13 +9,12 @@ class HerMessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
+            borderRadius: BorderRadius.circular(10),
             color: colors.secondary,
           ),
           child: Padding(
@@ -27,7 +26,7 @@ class HerMessageBubble extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 5),
-        _ImageBubbe( message.imageUrl! ),
+        _ImageBubbe(message.imageUrl!),
         const SizedBox(height: 10),
       ],
     );
@@ -37,12 +36,12 @@ class HerMessageBubble extends StatelessWidget {
 class _ImageBubbe extends StatelessWidget {
   final String imageUrl;
 
-  const _ImageBubbe( this.imageUrl );
+  const _ImageBubbe(this.imageUrl);
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
+      borderRadius: BorderRadius.circular(10),
       child: Image.network(
         imageUrl,
         fit: BoxFit.cover,
