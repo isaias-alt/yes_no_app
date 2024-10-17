@@ -16,11 +16,14 @@ class AppTheme {
   final int selectedColor;
 
   AppTheme({required this.selectedColor})
-  : assert (selectedColor >= 0 && selectedColor <= _colorThemes.length - 1, 
-  'Colors must be between 0 and ${ _colorThemes.length }');
+      : assert(
+          selectedColor >= 0 && selectedColor <= _colorThemes.length - 1,
+          'Colors must be between 0 and ${_colorThemes.length}',
+        );
 
   ThemeData theme() {
     return ThemeData(
+      brightness: Brightness.dark,
       colorSchemeSeed: _colorThemes[selectedColor],
     );
   }

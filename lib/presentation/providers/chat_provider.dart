@@ -14,26 +14,36 @@ class ChatProvider extends ChangeNotifier {
     final newMessage = Message(text: text, fromWho: FromWho.mine);
     messageList.add(newMessage);
 
-    if (text.endsWith('?')) {
+    // Detectar palabras clave "mañana" y "tarde" en cualquier parte del texto
+    if (text.contains('mañana')) {
+      final herMessage =
+          Message(text: 'Lo pensaré mañana', fromWho: FromWho.hers);
+      messageList.add(herMessage);
+    } else if (text.contains('tarde')) {
+      final herMessage =
+          Message(text: 'Lo vemos en la tarde', fromWho: FromWho.hers);
+      messageList.add(herMessage);
+    } else if (text.endsWith('?')) {
       herReply();
     }
+
     notifyListeners();
-    moveScrollToBotton();
+    moveScrollToBottom();
   }
 
   Future<void> herReply() async {
     final herMessage = await getYesNoAnswer.getAnswer();
     messageList.add(herMessage);
     notifyListeners();
-    moveScrollToBotton();
+    moveScrollToBottom();
   }
 
-  Future<void> moveScrollToBotton() async {
+  Future<void> moveScrollToBottom() async {
     await Future.delayed(const Duration(milliseconds: 100));
     chatScrollController.animateTo(
       chatScrollController.position.maxScrollExtent,
       duration: const Duration(milliseconds: 300),
-      curve: Curves.bounceInOut,
+      curve: Curves.easeInOut,
     );
   }
 }
