@@ -14,7 +14,6 @@ class ChatProvider extends ChangeNotifier {
     final newMessage = Message(text: text, fromWho: FromWho.mine);
     messageList.add(newMessage);
 
-    // Detectar palabras clave "mañana" y "tarde" en cualquier parte del texto
     if (text.contains('mañana')) {
       final herMessage =
           Message(text: 'Lo pensaré mañana', fromWho: FromWho.hers);
