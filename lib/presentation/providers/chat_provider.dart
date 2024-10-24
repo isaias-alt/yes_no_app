@@ -14,9 +14,8 @@ class ChatProvider extends ChangeNotifier {
     final newMessage = Message(text: text, fromWho: FromWho.mine);
     messageList.add(newMessage);
 
-    if (text.contains('mañana')) {
-      final herMessage =
-          Message(text: 'Lo pensaré mañana', fromWho: FromWho.hers);
+    if (text.contains('dias')) {
+      final herMessage = Message(text: 'Buenos dias', fromWho: FromWho.hers);
       messageList.add(herMessage);
     } else if (text.contains('tarde')) {
       final herMessage =

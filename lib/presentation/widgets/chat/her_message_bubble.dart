@@ -18,7 +18,7 @@ class HerMessageBubble extends StatelessWidget {
       children: [
         Container(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(50),
             color: colors.secondary,
           ),
           child: Padding(
@@ -68,7 +68,7 @@ class _ImageBubbe extends StatelessWidget {
             width: size.width * 0.7,
             height: 150,
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            child: const Text('Anya 💕 está mandando una imagen'),
+            child: const Text('Jennifer está mandando una imagen'),
           );
         },
       ),

@@ -1,45 +1,61 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'package:yes_no_app/presentation/views/chat/chat_view.dart';
+import 'package:provider/provider.dart';
+import 'package:yes_no_app/presentation/providers/chat_provider.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
 
   @override
-  _ChatScreenState createState() => _ChatScreenState();
+  ChatScreenState createState() => ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+class ChatScreenState extends State<ChatScreen> {
   String? userName;
+  int? userAge;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _askForUserName();
+      _askForUserNameAndAge();
     });
   }
 
-  void _askForUserName() {
+  void _askForUserNameAndAge() {
     final TextEditingController nameController = TextEditingController();
+    final TextEditingController ageController = TextEditingController();
 
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        title: const Text('Ingresa tu nombre'),
-        content: TextField(
-          controller: nameController,
-          decoration: const InputDecoration(hintText: 'Tu nombre'),
+        title: const Text('Ingresa tus datos'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: nameController,
+              decoration: const InputDecoration(hintText: 'Tu nombre'),
+            ),
+            TextField(
+              controller: ageController,
+              decoration: const InputDecoration(hintText: 'Tu edad'),
+              keyboardType: TextInputType.number,
+            ),
+          ],
         ),
         actions: [
           TextButton(
             onPressed: () {
-              setState(() {
-                userName = nameController.text;
-              });
-              Navigator.of(context).pop();
+              final int? age = int.tryParse(ageController.text);
+              if (age != null && age > 0) {
+                setState(() {
+                  userName = nameController.text;
+                  userAge = age;
+                });
+                Navigator.of(context).pop();
+              }
             },
             child: const Text('Aceptar'),
           ),
@@ -48,21 +64,48 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  void _clearChat() {
+    final chatProvider = context.read<ChatProvider>();
+    chatProvider.messageList.clear();
+    // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+    chatProvider.notifyListeners();
+
+    setState(() {
+      userName = null;
+      userAge = null;
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _askForUserNameAndAge();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(userName != null ? 'Chat de $userName y Millie' : 'Millie'),
+        title:
+            Text(userName != null ? 'Chat de $userName y Natalie' : 'Natalie'),
         leading: const Padding(
           padding: EdgeInsets.all(8.0),
           child: CircleAvatar(
             backgroundImage: NetworkImage(
-              'https://upload.wikimedia.org/wikipedia/commons/b/b2/Millie_Bobby_Brown_-_MBB_-_4_-_SFM5_-_July_10%2C_2022_at_Stranger_Fan_Meet_5_People_Convention_%28cropped%29.jpg',
+              'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Natalie_Portman_Vogue_2024.jpg/220px-Natalie_Portman_Vogue_2024.jpg',
             ),
           ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.restore),
+            onPressed: _clearChat,
+          ),
+        ],
       ),
-      body: const ChatView(),
+      body: (userAge != null && userAge! >= 18)
+          ? const ChatView()
+          : const Center(
+              child: Text('Debes ser mayor de 18 años para chatear'),
+            ),
     );
   }
 }
